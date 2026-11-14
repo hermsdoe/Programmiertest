@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Digitaler Adventskalender 2026</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 100px; background: #f4f4f4; }
+        .box { background: white; padding: 30px; display: inline-block; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        input, button { padding: 10px; margin: 10px; border-radius: 4px; border: 1px solid #ccc; }
+        button { background: #c0392b; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>Sicherer Zugang</h2>
+        <p>Gib das Passwort ein, um den Kalender zu öffnen:</p>
+        <input type="password" id="passInput" placeholder="Passwort">
+        <button onclick="goToCalendar()">Öffnen</button>
+        <p id="error" style="color:red; display:none;">Dieses Passwort ist leider falsch.</p>
+    </div>
+
+    <script>
+        function goToCalendar() {
+            var password = document.getElementById("passInput").value.trim();
+            if (password === "") return;
+            
+            // Leitet den Nutzer an die Datei weiter, die wie das Passwort heißt
+            var targetUrl = password + ".html";
+            
+            // Prüfen, ob die Datei existiert (verhindert hässliche 404-Fehler im Browser)
+            fetch(targetUrl, { method: 'HEAD' })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = targetUrl;
+                } else {
+                    document.getElementById("error").style.display = "block";
+                }
+            })
+            .catch(() => {
+                document.getElementById("error").style.display = "block";
+            });
+        }
+    </script>
+</body>
+</html>

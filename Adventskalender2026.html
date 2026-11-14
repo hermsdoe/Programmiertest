@@ -1,0 +1,642 @@
+
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#12382f">
+  <meta name="description" content="Dein persönlicher Adventskalender – 24 kleine Überraschungen.">
+  <title>Annes Adventskalender</title>
+
+  <style>
+    :root {
+      --forest: #12382f;
+      --pine: #1c5142;
+      --cream: #fff8e9;
+      --gold: #e9bd69;
+      --red: #a93d42;
+      --ink: #23352e;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      min-height: 100%;
+      background: var(--forest);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: ui-rounded, "Avenir Next", Avenir, system-ui,
+        -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(ellipse at 15% 8%, rgba(233,189,105,.18), transparent 30%),
+        radial-gradient(ellipse at 90% 30%, rgba(255,255,255,.08), transparent 28%),
+        linear-gradient(145deg, #0d2b25, #1b4b3e 58%, #12382f);
+      padding: max(18px, env(safe-area-inset-top)) 16px
+        max(28px, env(safe-area-inset-bottom));
+    }
+
+    button { font: inherit; -webkit-tap-highlight-color: transparent; }
+
+    .shell {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .topline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      color: #f8e6bf;
+      font-size: .75rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    .topline::before,
+    .topline::after {
+      content: "";
+      height: 1px;
+      width: 34px;
+      background: rgba(248,230,191,.55);
+    }
+
+    header {
+      text-align: center;
+      color: var(--cream);
+      padding: 24px 0 22px;
+    }
+
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 500;
+      font-size: clamp(2.3rem, 7vw, 4.8rem);
+      line-height: 1.02;
+      margin: 17px 0 12px;
+      letter-spacing: -.045em;
+    }
+
+    .subtitle {
+      color: #e4eadf;
+      font-size: clamp(.96rem, 2.5vw, 1.1rem);
+      margin: 0 auto;
+      max-width: 540px;
+      line-height: 1.6;
+    }
+
+    .rule {
+      width: 68px;
+      height: 3px;
+      border-radius: 9px;
+      background: var(--gold);
+      margin: 23px auto 0;
+    }
+
+    .calendar-wrap {
+      background: rgba(255,248,233,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 28px;
+      padding: clamp(12px, 3vw, 24px);
+      box-shadow: 0 24px 70px rgba(0,0,0,.22);
+      backdrop-filter: blur(8px);
+    }
+
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(8px, 1.8vw, 16px);
+    }
+
+    .door {
+      position: relative;
+      min-height: clamp(92px, 15vw, 158px);
+      border: 1px solid rgba(255,255,255,.45);
+      border-radius: 15px;
+      padding: 10px 7px;
+      color: #fff9e9;
+      cursor: pointer;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      background: linear-gradient(145deg, #b64b4e, #87333b);
+      box-shadow: 0 5px 0 #632a31, 0 9px 15px rgba(0,0,0,.13);
+      transition: transform .16s ease, filter .16s ease;
+    }
+
+    .door:nth-child(3n+2) {
+      background: linear-gradient(145deg, #d7ad5e, #a97932);
+      box-shadow: 0 5px 0 #795425, 0 9px 15px rgba(0,0,0,.13);
+    }
+
+    .door:nth-child(3n) {
+      background: linear-gradient(145deg, #33745e, #1b4b3e);
+      box-shadow: 0 5px 0 #12382f, 0 9px 15px rgba(0,0,0,.13);
+    }
+
+    .door:hover:not(:disabled) {
+      transform: translateY(-3px);
+      filter: brightness(1.08);
+    }
+
+    .door:active:not(:disabled) {
+      transform: translateY(2px);
+    }
+
+    .door:focus-visible,
+    button:focus-visible {
+      outline: 3px solid #f7d98f;
+      outline-offset: 3px;
+    }
+
+    .door:disabled {
+      cursor: not-allowed;
+      filter: saturate(.68);
+      opacity: .72;
+    }
+
+    .door-number {
+      font-family: Georgia, serif;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      line-height: 1;
+    }
+
+    .door-icon {
+      font-size: clamp(1rem, 2.5vw, 1.45rem);
+    }
+
+    .door-label {
+      font-size: clamp(.63rem, 1.5vw, .78rem);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      opacity: .94;
+    }
+
+    .door.opened {
+      background: linear-gradient(145deg, #f7edda, #e9d7b4) !important;
+      color: #244438;
+      box-shadow: 0 5px 0 #c4b18c,
+        0 9px 15px rgba(0,0,0,.1) !important;
+    }
+
+    .door.opened .door-label {
+      color: #49675a;
+    }
+
+    .hint {
+      text-align: center;
+      color: #e0e9de;
+      font-size: .88rem;
+      margin: 20px 0 3px;
+    }
+
+    footer {
+      text-align: center;
+      color: rgba(255,248,233,.66);
+      font-size: .78rem;
+      padding: 22px 0 4px;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: rgba(5,23,19,.78);
+      backdrop-filter: blur(10px);
+    }
+
+    .overlay[hidden] {
+      display: none;
+    }
+
+    .panel {
+      width: min(100%, 410px);
+      background: var(--cream);
+      border-radius: 24px;
+      padding: clamp(24px, 6vw, 36px);
+      box-shadow: 0 28px 90px rgba(0,0,0,.38);
+      text-align: center;
+    }
+
+    .panel-mark {
+      font-size: 2rem;
+    }
+
+    .panel h2 {
+      font-family: Georgia, serif;
+      font-weight: 500;
+      font-size: 2rem;
+      line-height: 1.1;
+      margin: 12px 0 10px;
+      color: var(--forest);
+    }
+
+    .content-card {
+      text-align: left;
+    }
+
+    .content-card .panel-mark,
+    .content-card h2 {
+      text-align: center;
+    }
+
+    .surprise {
+      background: #f2ead8;
+      border-radius: 14px;
+      padding: 17px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .primary {
+      width: 100%;
+      margin-top: 16px;
+      border: 0;
+      border-radius: 12px;
+      padding: 14px 16px;
+      background: var(--forest);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .primary:hover {
+      background: var(--pine);
+    }
+
+    @media (min-width: 650px) {
+      .calendar {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+      }
+
+      .door {
+        min-height: 142px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      body {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .calendar-wrap {
+        padding: 10px;
+        border-radius: 20px;
+      }
+
+      .calendar {
+        gap: 7px;
+      }
+
+      .door {
+        min-height: 82px;
+        border-radius: 11px;
+      }
+
+      .door-label {
+        font-size: .58rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="shell">
+    <header>
+      <div class="topline">24 Tage bis Weihnachten</div>
+
+      <h1 id="pageTitle">Annes Adventskalender</h1>
+
+      <p class="subtitle" id="pageSubtitle">
+        Jeden Tag wartet eine kleine Überraschung auf dich.<br>
+        An den meisten Tagen gibt es etwas zu essen oder zu trinken, oft ohne Aufgabe, manchmal aber auch mit einer Aufgabe, die wir abends zusammen umsetzen sollen.<br>
+        Dazu sind in der Regel auch Hilfsmittel im Adventskalender vorhanden und die Bilder auf den Türchen und die Sätze hinter den Türchen geben einen Hinweis darauf, was gemacht werden soll. <br>
+        Mach es dir gemütlich und öffne ein Türchen.
+      </p>
+
+      <div class="rule"></div>
+    </header>
+
+    <section class="calendar-wrap" aria-label="Adventskalender">
+      <div class="calendar" id="calendar"></div>
+
+      <p class="hint" id="hint">
+        ✨ Ein Türchen pro Tag – vom 1. bis zum 24. Dezember.
+      </p>
+    </section>
+
+    <footer>Mit Liebe und viel Aufwand von Sebastian gestaltet · Frohe Adventszeit ✦</footer>
+  </main>
+
+  <!-- Fenster für die täglichen Überraschungen -->
+  <div
+    class="overlay"
+    id="doorOverlay"
+    hidden
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="surpriseTitle"
+  >
+    <section class="panel content-card">
+      <div class="panel-mark" id="surpriseIcon">🎁</div>
+      <h2 id="surpriseTitle">Deine Überraschung</h2>
+      <div class="surprise" id="surpriseText"></div>
+
+      <button class="primary" id="closeDoor" type="button">
+        Wie schön ✨
+      </button>
+    </section>
+  </div>
+
+  <script>
+    // ===================== EINSTELLUNGEN =====================
+
+    const SETTINGS = {
+      title: "Annes Adventskalender",
+
+      subtitle:
+        "Jeden Tag wartet eine kleine Überraschung auf dich.<br>" +
+        "An den meisten Tagen gibt es etwas zu essen oder zu trinken, oft ohne Aufgabe, manchmal aber auch mit einer Aufgabe, die wir abends zusammen umsetzen sollen.<br>" + 
+        "Dazu sind in der Regel auch Hilfsmittel im Adventskalender vorhanden und die Bilder auf den Türchen und die Sätze hinter den Türchen geben einen Hinweis darauf, was gemacht werden soll. <br>" + 
+        "Mach es dir gemütlich und öffne ein Türchen.",
+
+        
+      // TESTMODUS:
+      // true  = alle Türchen sofort öffnen
+      // false = Türchen nach dem Datum freigeben
+      testMode: true
+    };
+
+    // ===================== ÜBERRASCHUNGEN =====================
+
+    const SURPRISES = [
+      {
+        icon: "🍫",
+        title: "Eine kleine Pause",
+        text: "Heute ist Zeit für dich. Mach dir dein Lieblingsgetränk, atme tief durch und gönn dir fünf ruhige Minuten."
+      },
+      {
+        icon: "🍌🎈",
+        title: "Dein Winter-Soundtrack",
+        text: "Hör heute ein Lied, das dich glücklich macht. Bonus: Dreh es ein bisschen lauter und sing mit."
+      },
+      {
+        icon: "🪒",
+        title: "Eine liebe Nachricht",
+        text: "Schreib einer Person, die du magst, eine kurze Nachricht. Ein kleines „Ich denk an dich“ kann viel bedeuten."
+      },
+      {
+        icon: "🦌",
+        title: "Naschzeit",
+        text: "Heute darf es etwas Süßes sein. Such dir einen Keks aus oder backe deine Lieblingsplätzchen."
+      },
+      {
+        icon: "🍑",
+        title: "Gemütliches Licht",
+        text: "Mach es dir heute Abend mit Kerzenlicht oder einer Lichterkette gemütlich."
+      },
+      {
+        icon: "🎅",
+        title: "Ein Erinnerungsfoto",
+        text: "Mach ein Foto von einem kleinen schönen Moment des Tages. Sammle Erinnerungen statt Dinge."
+      },
+      {
+        icon: "🍪",
+        title: "Frische Luft",
+        text: "Geh für zehn Minuten nach draußen und entdecke, wie die Welt heute aussieht."
+      },
+      {
+        icon: "☕",
+        title: "Filmabend",
+        text: "Such dir einen Wohlfühlfilm aus und mach es dir mit einer Decke bequem."
+      },
+      {
+        icon: "🧔👨",
+        title: "Winterduft",
+        text: "Schäle eine Mandarine, mach dir Tee oder genieße einen Duft, der dich an Weihnachten erinnert."
+      },
+      {
+        icon: "💚",
+        title: "Kuscheltag",
+        text: "Zieh deine gemütlichsten Socken an und erlaube dir, heute einen Gang herunterzuschalten."
+      },
+      {
+        icon: "🌟",
+        title: "Drei gute Dinge",
+        text: "Denk an drei Dinge, die heute gut waren – auch wenn sie noch so klein sind."
+      },
+      {
+        icon: "✨👙",
+        title: "Eine Mini-Überraschung",
+        text: "Bereite jemandem eine kleine Freude vor. Es muss nichts kosten – Zeit und Aufmerksamkeit zählen."
+      },
+      {
+        icon: "🤶",
+        title: "Ein paar Seiten",
+        text: "Lies ein paar Seiten in einem Buch oder hör eine kurze Geschichte."
+      },
+      {
+        icon: "🍵",
+        title: "Etwas Warmes",
+        text: "Koch dir eine Suppe, mach Porridge oder genieße ein anderes warmes Lieblingsessen."
+      },
+      {
+        icon: "💆",
+        title: "Sei stolz auf dich",
+        text: "Denk an etwas, das du dieses Jahr geschafft hast. Du darfst stolz auf dich sein."
+      },
+      {
+        icon: "📿",
+        title: "Spielpause",
+        text: "Mach ein kleines Rätsel, ein Puzzle oder spiel etwas, das dir Spaß macht."
+      },
+      {
+        icon: "🫶",
+        title: "Weihnachtsstimmung",
+        text: "Hör Weihnachtsmusik oder schmücke eine kleine Ecke in deinem Zuhause."
+      },
+      {
+        icon: "🍬",
+        title: "Zeit zusammen",
+        text: "Ruf jemanden an oder verbringe ein paar bewusste Minuten mit einem Lieblingsmenschen."
+      },
+      {
+        icon: "🍆",
+        title: "Langsam genießen",
+        text: "Trink deinen Tee oder Kakao heute ganz ohne nebenbei aufs Handy zu schauen."
+      },
+      {
+        icon: "🧚",
+        title: "Wünsch dir was",
+        text: "Nimm dir einen Moment und überlege, worauf du dich in den nächsten Wochen freust."
+      },
+      {
+        icon: "🕯️",
+        title: "Kleine Winterrunde",
+        text: "Mach einen Spaziergang oder schau einfach aus dem Fenster und entdecke etwas Schönes."
+      },
+      {
+        icon: "🛷",
+        title: "Kreativmoment",
+        text: "Male, bastle, kritzle oder schreibe ein paar Zeilen – ohne Anspruch auf Perfektion."
+      },
+      {
+        icon: "❤️",
+        title: "Ein Kompliment",
+        text: "Mach jemandem ein ehrliches Kompliment. Oder sag dir selbst etwas Freundliches."
+      },
+      {
+        icon: "🎄", //🎵💌📸❄️🎬🍊🧦🎁📚🥣💚🧩🌲🧣🎨
+        title: "Frohe Weihnachten!",
+        text: "Das letzte Türchen ist da. Ich wünsche dir Wärme, Freude, schöne Begegnungen und einen wundervollen Weihnachtstag. ❤️"
+      }
+    ];
+
+    // ===================== KALENDERLOGIK =====================
+
+    const $ = (id) => document.getElementById(id);
+
+    let chosenDoor = null;
+    const opened = new Set();
+
+    $("pageTitle").textContent = SETTINGS.title;
+    $("pageSubtitle").innerHTML = SETTINGS.subtitle;
+
+    function canOpen(day) {
+      // Im Testmodus sind alle Türchen freigegeben.
+      if (SETTINGS.testMode) {
+        return true;
+      }
+
+      // Normalmodus: nur im Dezember bis einschließlich heute.
+      const now = new Date();
+
+      return now.getMonth() === 11 &&
+             now.getDate() >= day;
+    }
+
+    function renderCalendar() {
+      const calendar = $("calendar");
+      calendar.replaceChildren();
+
+      for (let day = 1; day <= 24; day++) {
+        const item = SURPRISES[day - 1] || {
+          icon: "🎁",
+          title: `Türchen ${day}`,
+          text: "Hier wartet deine Überraschung."
+        };
+
+        const allowed = canOpen(day);
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className =
+          "door" + (opened.has(day) ? " opened" : "");
+        btn.disabled = !allowed;
+
+        btn.setAttribute(
+          "aria-label",
+          `Türchen ${day}${allowed ? "" : ", noch gesperrt"}`
+        );
+
+        const number = document.createElement("span");
+        number.className = "door-number";
+        number.textContent = String(day).padStart(2, "0");
+
+        const icon = document.createElement("span");
+        icon.className = "door-icon";
+        icon.textContent = opened.has(day)
+          ? "✓"
+          : (allowed ? item.icon : "🔒");
+
+        const label = document.createElement("span");
+        label.className = "door-label";
+        label.textContent = opened.has(day)
+          ? "Geöffnet"
+          : (allowed ? "Öffnen" : "Bald");
+
+        btn.append(number, icon, label);
+
+        btn.addEventListener("click", () => {
+          if (canOpen(day)) {
+            showDoor(day);
+          }
+        });
+
+        calendar.append(btn);
+      }
+
+      $("hint").textContent = SETTINGS.testMode
+        ? "🧪 Testmodus aktiv – alle 24 Türchen sind freigegeben."
+        : "✨ Ein Türchen pro Tag – vom 1. bis zum 24. Dezember.";
+    }
+
+    function showDoor(day) {
+      const item = SURPRISES[day - 1] || {
+        icon: "🎁",
+        title: `Türchen ${day}`,
+        text: "Hier wartet deine Überraschung."
+      };
+
+      chosenDoor = day;
+
+      $("surpriseIcon").textContent = item.icon || "🎁";
+      $("surpriseTitle").textContent =
+        item.title || `Türchen ${day}`;
+      $("surpriseText").textContent =
+        item.text || "Deine Überraschung wartet auf dich.";
+
+      $("doorOverlay").hidden = false;
+      $("closeDoor").focus();
+    }
+
+    function closeDoor() {
+      if (chosenDoor !== null) {
+        opened.add(chosenDoor);
+      }
+
+      chosenDoor = null;
+      $("doorOverlay").hidden = true;
+      renderCalendar();
+    }
+
+    $("closeDoor").addEventListener("click", closeDoor);
+
+    $("doorOverlay").addEventListener("click", (event) => {
+      if (event.target === $("doorOverlay")) {
+        closeDoor();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (
+        event.key === "Escape" &&
+        !$("doorOverlay").hidden
+      ) {
+        closeDoor();
+      }
+    });
+
+    // Kalender beim Laden der Seite anzeigen.
+    renderCalendar();
+  </script>
+</body>
+</html>
