@@ -361,7 +361,7 @@
       <div class="surprise" id="surpriseText"></div>
 
       <button class="primary" id="closeDoor" type="button">
-        Wie schön ✨
+        Ich freue mich ✨
       </button>
     </section>
   </div>
@@ -382,131 +382,132 @@
       // TESTMODUS:
       // true  = alle Türchen sofort öffnen
       // false = Türchen nach dem Datum freigeben
-      testMode: false
+      testMode: true
     };
 
     // ===================== ÜBERRASCHUNGEN =====================
 
     const SURPRISES = [
       {
-        icon: "🍫",
-        title: "Eine kleine Pause",
-        text: "Heute ist Zeit für dich. Mach dir dein Lieblingsgetränk, atme tief durch und gönn dir fünf ruhige Minuten."
+        icon: "🍫", //1. Dezember
+        title: "Es beginnt mit Schokolade",
+        text: "Wie bei einem klassischen Adventskalender starten wir mit Schokolade. Ich versuche dir immer alles auf den Nachttisch zu legen."
       },
       {
-        icon: "🍌🎈",
-        title: "Dein Winter-Soundtrack",
-        text: "Hör heute ein Lied, das dich glücklich macht. Bonus: Dreh es ein bisschen lauter und sing mit."
+        icon: "🍌🎈", //2. Dezember
+        title: "Die Jahrespackung",
+        text: "Die Jahrespackung für 2027. Vielleicht können wir sie ja aber auch im Dezember aufbrauchen?"
       },
       {
-        icon: "🪒",
-        title: "Eine liebe Nachricht",
-        text: "Schreib einer Person, die du magst, eine kurze Nachricht. Ein kleines „Ich denk an dich“ kann viel bedeuten."
+        icon: "🪒👅", //3. Dezember
+        title: "Zeit für die Vorbereitungen",
+        text: "So langsam beginnen die Vorbereitungen und das Aufräumen fängt an. Lady Superhasi ist dann hoffentlich heute Abend glatt. Lord Superhasi kontrolliert auch."
       },
       {
-        icon: "🦌",
-        title: "Naschzeit",
-        text: "Heute darf es etwas Süßes sein. Such dir einen Keks aus oder backe deine Lieblingsplätzchen."
+        icon: "🦌", //4. Dezember
+        title: "Das Rentier",
+        text: "Die Rentiere müssen allmählich gestriegelt, angespannt und eingeritten werden."
       },
       {
-        icon: "🍑",
-        title: "Gemütliches Licht",
-        text: "Mach es dir heute Abend mit Kerzenlicht oder einer Lichterkette gemütlich."
+        icon: "🍆➡️🍑⬅️🍆", //5. Dezember
+        title: "Der erste Gast",
+        text: "Kommt da schon der erste Gast zum Feiern mit uns beiden vorbei?"
       },
       {
-        icon: "🎅",
-        title: "Ein Erinnerungsfoto",
-        text: "Mach ein Foto von einem kleinen schönen Moment des Tages. Sammle Erinnerungen statt Dinge."
+        icon: "🎅", //6. Dezember
+        title: "Nikolaus",
+        text: "Heute kommt der Nikolaus mit Rute vorbei. Wer lieb war, bekommt auch Schokolade."
       },
       {
-        icon: "🍪",
-        title: "Frische Luft",
-        text: "Geh für zehn Minuten nach draußen und entdecke, wie die Welt heute aussieht."
+        icon: "🍹", //7. Dezember
+        title: "Gesunde Früchte",
+        text: "Das erste Wochenende war schon intensiv, Zeit für eine Entspannungspause mit einem gesunden Getränk."
       },
       {
-        icon: "☕",
-        title: "Filmabend",
-        text: "Such dir einen Wohlfühlfilm aus und mach es dir mit einer Decke bequem."
+        icon: "☕", //8. Dezember
+        title: "Mehr Entspannung",
+        text: "Auch heute sollte es nur ein gesundes Getränk geben."
       },
       {
-        icon: "🧔👨",
-        title: "Winterduft",
-        text: "Schäle eine Mandarine, mach dir Tee oder genieße einen Duft, der dich an Weihnachten erinnert."
+        icon: "🪒🍆", //9. Dezember
+        title: "Zeit für weitere Vorbereitungen",
+        text: "Auch Lord Superhasi muss sich nun vorbereiten und ein paar Sachen glattziehen. Vielleicht kontrolliert ja Lady Superhasi."
       },
       {
-        icon: "💚",
-        title: "Kuscheltag",
-        text: "Zieh deine gemütlichsten Socken an und erlaube dir, heute einen Gang herunterzuschalten."
+        icon: "💚😏", //10. Dezember
+        title: "Unterwegs",
+        text: "Leider ist Lord Superhasi nicht da. Da darf Lady Superhasi machen, was sie will."
       },
       {
-        icon: "🌟",
-        title: "Drei gute Dinge",
-        text: "Denk an drei Dinge, die heute gut waren – auch wenn sie noch so klein sind."
+        icon: "🌟👄", //11. Dezember
+        title: "...und Rückkehr",
+        text: "Auch heute kommt Lord Superhase allenfalls sehr spät heim. Nochmals freie Auswahl für Lady Superhasi. Vielleicht hat sie sich ja auch was überlegt?"
       },
       {
-        icon: "✨👙",
+        icon: "👙", //12.  Dezember
         title: "Eine Mini-Überraschung",
-        text: "Bereite jemandem eine kleine Freude vor. Es muss nichts kosten – Zeit und Aufmerksamkeit zählen."
+        text: "Schon lange da und nie benutzt. Lord Superhasi möchte aber doch mal sehen, wie es aussieht und wie Lady Superhasi sie ordentlich präsentiert."
       },
       {
-        icon: "🤶",
-        title: "Ein paar Seiten",
-        text: "Lies ein paar Seiten in einem Buch oder hör eine kurze Geschichte."
+        icon: "🤶", //13. Dezember
+        title: "Weihnachtsfrau",
+        text: "Der Nikolaus war schon da, kommt heute die Weihnachtsfrau?"
       },
       {
-        icon: "🍵",
-        title: "Etwas Warmes",
-        text: "Koch dir eine Suppe, mach Porridge oder genieße ein anderes warmes Lieblingsessen."
+        icon: "🍵", //14. Dezember
+        title: "Mal wieder ruhiger",
+        text: "Das Wochenende war anstrengend und der Advent ist halb vorbei. Zeit für einen entspannten Tag."
       },
       {
-        icon: "💆",
-        title: "Sei stolz auf dich",
-        text: "Denk an etwas, das du dieses Jahr geschafft hast. Du darfst stolz auf dich sein."
+        icon: "💆", //15. Dezember
+        title: "Massage",
+        text: "Lady Superhasi bekommt eine Massage und was sie im Anschluss sonst noch so will."
       },
       {
-        icon: "📿",
-        title: "Spielpause",
-        text: "Mach ein kleines Rätsel, ein Puzzle oder spiel etwas, das dir Spaß macht."
+        icon: "⚪👩‍🦰⚪", //16. Dezember
+        title: "Perlenkette",
+        text: "Das Schmücken geht voran. Lady Superhasi bekommt eine Perlenkette."
       },
       {
-        icon: "🫶",
-        title: "Weihnachtsstimmung",
-        text: "Hör Weihnachtsmusik oder schmücke eine kleine Ecke in deinem Zuhause."
+        icon: "♋", //17. Dezember
+        title: "Nachbessern",
+        text: "Die Rasur muss wohl nochmal aufgefrischt werden. Vielleicht kontrollieren ja beide gleichzeitig."
       },
       {
-        icon: "🍬",
-        title: "Zeit zusammen",
-        text: "Ruf jemanden an oder verbringe ein paar bewusste Minuten mit einem Lieblingsmenschen."
+        icon: "🍬🍭", //18. Dezember
+        title: "Zuckerstange",
+        text: "Auch schon lange da. Wie man sie wohl richtig benutzt? Hat Lady Superhasi eine Idee?"
       },
       {
-        icon: "🍆",
-        title: "Langsam genießen",
-        text: "Trink deinen Tee oder Kakao heute ganz ohne nebenbei aufs Handy zu schauen."
+        icon: "🍑➡️🍆⬅️🍑", //19. Dezember
+        title: "Der zweite Gast",
+        text: "Wer wurde denn beim ersten Gast verwöhnt? Dann ist beim zweiten Gast der andere dran."
       },
       {
-        icon: "🧚",
-        title: "Wünsch dir was",
-        text: "Nimm dir einen Moment und überlege, worauf du dich in den nächsten Wochen freust."
+        icon: "🧚👱‍♀️", //20. Dezember
+        title: "Weihnachtsengel",
+        text: "Heute Abend kommt der blonde Weihnachtsengel in einem schicken Anzug vorbei. Wie? Das darf Lady Superhasi entscheiden."
       },
       {
-        icon: "🕯️",
-        title: "Kleine Winterrunde",
-        text: "Mach einen Spaziergang oder schau einfach aus dem Fenster und entdecke etwas Schönes."
+        icon: "🕯️", //21. Dezember
+        title: "Schokolade zum Ende hin",
+        text: "Wir lassen es mit Schokolade ausklingen. "
       },
       {
-        icon: "🛷",
-        title: "Kreativmoment",
-        text: "Male, bastle, kritzle oder schreibe ein paar Zeilen – ohne Anspruch auf Perfektion."
+        icon: "🛷", //22. Dezember
+        title: "Schlittenfahrt",
+        text: "Schneit es schon? Oder machen wir auch so eine chinesische Schlittenfahrt \n\nSchlittenfahrt.png?",
+        link: "Schlittenfahrt.png"
       },
       {
         icon: "❤️",
-        title: "Ein Kompliment",
-        text: "Mach jemandem ein ehrliches Kompliment. Oder sag dir selbst etwas Freundliches."
+        title: "Der Advent geht zu Ende",
+        text: "Die Luft ist allmählich raus und wir sind auf dem Weg nach Törber, da gibt es keine großen Aktionen mehr."
       },
       {
-        icon: "🎄", //🎵💌📸❄️🎬🍊🧦🎁📚🥣💚🧩🌲🧣🎨
+        icon: "🎄", //🎵💌📸❄️🎬🍊🧦🎁📚🥣💚🧩🌲🧣🎨🍪✨📿🫶
         title: "Frohe Weihnachten!",
-        text: "Das letzte Türchen ist da. Ich wünsche dir Wärme, Freude, schöne Begegnungen und einen wundervollen Weihnachtstag. ❤️"
+        text: "Frohe Weihnachten! (Und vielleicht hast du ja eine Idee, was wir heute oder in den kommenden Tagen machen sollen?) ❤️"
       }
     ];
 
@@ -601,8 +602,25 @@
       $("surpriseIcon").textContent = item.icon || "🎁";
       $("surpriseTitle").textContent =
         item.title || `Türchen ${day}`;
+      const surpriseText = $("surpriseText");
+      surpriseText.replaceChildren();  
       $("surpriseText").textContent =
         item.text || "Deine Überraschung wartet auf dich.";
+
+      if (item.link) {
+        const link = document.createElement("a");
+        link.href = item.link;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = "🎄 Grafik öffnen";
+        link.style.display = "inline-block";
+        link.style.marginTop = "12px";
+        link.style.color = "#1c5142";
+        link.style.fontWeight = "700";
+
+  surpriseText.appendChild(document.createElement("br"));
+  surpriseText.appendChild(link);
+}  
 
       $("doorOverlay").hidden = false;
       $("closeDoor").focus();
